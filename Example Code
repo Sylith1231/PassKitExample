@@ -1,0 +1,35 @@
+import SwiftUI
+import UIKit
+import PassKit
+
+struct ContentView: View {
+    var body: some View {
+        viewController()
+    }
+}
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
+}
+
+struct viewController: UIViewControllerRepresentable {
+    
+    func makeUIViewController(context: Context) -> PKAddPassesViewController {
+        
+        let url = Bundle.main.url(forResource: "fabpass", withExtension: "pkpass")
+        
+        let mydata = try! Data(contentsOf: url!)
+        
+        let myPass:PKPass = try! PKPass(data: mydata)
+        
+        let passController = PKAddPassesViewController(pass: myPass)
+        
+        return passController!
+    }
+    
+    func updateUIViewController(_ uiViewController: PKAddPassesViewController, context: Context) {
+        
+    }
+}
